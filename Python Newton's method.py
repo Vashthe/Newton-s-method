@@ -13,9 +13,13 @@ k = 1  # 迭代计数器
 flag = False  # 收敛标志
 x = sympy.symbols("x")  # 定义符号变量x
 
-# 预计算函数表达式及其导数
-exp_1 = sympy.sympify(func)  # 将输入字符串转换为SymPy表达式
-exp_1_d1 = sympy.diff(exp_1, x)  # 计算一阶导数f'(x)
+# 预计算函数表达式
+try:
+    exp_1 = sympy.sympify(func)  # 将输入字符串转换为SymPy表达式
+    exp_1_d1 = sympy.diff(exp_1, x)  # 计算一阶导数f'(x)
+except sympy.SympifyError:
+    print("错误：无效的函数表达式！")
+    exit()
 
 # 检查初始点导数是否为0
 if abs(exp_1_d1.subs(x, x_init).evalf()) < 1e-12:
